@@ -1,20 +1,43 @@
 import React, { useEffect, useState } from 'react';
 import {
-  BookOpen,
   Users,
   BookCheck,
   BarChart3,
-  ArrowRight,
   Menu,
   X,
   CheckCircle2,
   Mail,
+  ChevronDown,
 } from 'lucide-react';
 import { DemoHeroGeometric } from './components/demo';
+
+const FAQ_ITEMS = [
+  {
+    question: 'How long does it take to set up ClassBridge for our school?',
+    answer: 'Most schools are up and running within a week. We handle the technical setup while you focus on getting your teachers comfortable with the new tools. Our team guides you through every step.',
+  },
+  {
+    question: 'Do our teachers need special training to use ClassBridge?',
+    answer: 'Not at all. ClassBridge is designed to feel familiar to teachers who are used to traditional methods. We provide simple training sessions, but most teachers find it intuitive from day one.',
+  },
+  {
+    question: 'What happens to our existing student records and data?',
+    answer: 'We safely transfer all your existing records into ClassBridge. Your historical data stays intact and accessible, while new information integrates seamlessly with what you already have.',
+  },
+  {
+    question: 'How do parents access their child\'s information?',
+    answer: 'Parents receive simple login details and can access updates through any web browser or our mobile app. They get automatic notifications about attendance, grades, and school announcements.',
+  },
+  {
+    question: 'What if we need help or have technical issues?',
+    answer: 'Our support team is always ready to help. We offer phone support, email assistance, and can even provide on-site help when needed. You\'re never left to figure things out alone.',
+  },
+] as const;
 
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [faqOpenIndex, setFaqOpenIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -26,8 +49,11 @@ function App() {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-50">
+      <a href="#main-content" className="skip-link">
+        Skip to main content
+      </a>
       {/* Enhanced Navigation */}
-      <nav className="fixed w-full z-50 transition-all duration-300 bg-white/90 backdrop-blur-xl border-b border-blue-200/30 shadow-lg shadow-blue-100/20">
+      <nav aria-label="Main navigation" className={`fixed w-full z-50 transition-all duration-300 border-b border-blue-200/30 shadow-lg shadow-blue-100/20 backdrop-blur-xl ${isScrolled ? 'bg-white/95' : 'bg-white/90'}`}>
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
@@ -41,7 +67,7 @@ function App() {
                   <a
                     key={item}
                     href={`#${item.toLowerCase()}`}
-                    className="text-slate-600 hover:text-blue-600 transition-colors font-medium relative group"
+                    className="text-slate-600 hover:text-blue-600 transition-colors font-medium relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
                   >
                     {item}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full"></span>
@@ -52,7 +78,11 @@ function App() {
 
             {/* Mobile Menu Button */}
             <button
-              className="md:hidden text-slate-600 hover:text-blue-600 transition-colors"
+              type="button"
+              aria-expanded={isMenuOpen}
+              aria-controls="mobile-menu"
+              aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
+              className="md:hidden text-slate-600 hover:text-blue-600 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
               {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
@@ -61,12 +91,12 @@ function App() {
 
           {/* Mobile Menu */}
           {isMenuOpen && (
-            <div className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-blue-200/30 py-4 animate-fade-in shadow-lg">
+            <div id="mobile-menu" className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-blue-200/30 py-4 animate-fade-in shadow-lg">
               {['Features', 'Benefits', 'Contact'].map((item) => (
                 <a
                   key={item}
                   href={`#${item.toLowerCase()}`}
-                  className="block px-6 py-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-colors"
+                  className="block px-6 py-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item}
@@ -77,6 +107,7 @@ function App() {
         </div>
       </nav>
 
+      <main id="main-content">
       {/* New Animated Hero Section */}
       <DemoHeroGeometric />
 
@@ -266,14 +297,14 @@ function App() {
             Ready to see how ClassBridge can transform your school? Let's start the conversation.
           </p>
           <a
-            href="mailto:contact@classbridge.com"
-            className="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-200/30 transition-all duration-300 transform hover:scale-105 font-semibold"
+            href="mailto:contact@classbridge.in"
+            className="inline-flex items-center space-x-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-8 py-4 rounded-2xl hover:from-blue-700 hover:to-indigo-700 hover:shadow-xl hover:shadow-blue-200/30 transition-all duration-300 transform hover:scale-105 font-semibold focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2"
           >
             <Mail className="h-6 w-6" />
             <span>Contact Us Today</span>
           </a>
           <p className="text-sm text-slate-500 mt-4">
-            Email us at contact@classbridge.com or call to schedule a demo
+            Email us at contact@classbridge.in to schedule a demo
           </p>
         </div>
       </section>
@@ -288,44 +319,49 @@ function App() {
           <p className="text-xl text-center text-slate-600 mb-16 max-w-2xl mx-auto">
             Common questions from schools just like yours
           </p>
-          <div className="max-w-3xl mx-auto space-y-8">
-            {[
-              {
-                question: 'How long does it take to set up ClassBridge for our school?',
-                answer: 'Most schools are up and running within a week. We handle the technical setup while you focus on getting your teachers comfortable with the new tools. Our team guides you through every step.',
-              },
-              {
-                question: 'Do our teachers need special training to use ClassBridge?',
-                answer: 'Not at all. ClassBridge is designed to feel familiar to teachers who are used to traditional methods. We provide simple training sessions, but most teachers find it intuitive from day one.',
-              },
-              {
-                question: 'What happens to our existing student records and data?',
-                answer: 'We safely transfer all your existing records into ClassBridge. Your historical data stays intact and accessible, while new information integrates seamlessly with what you already have.',
-              },
-              {
-                question: 'How do parents access their child\'s information?',
-                answer: 'Parents receive simple login details and can access updates through any web browser or our mobile app. They get automatic notifications about attendance, grades, and school announcements.',
-              },
-              {
-                question: 'What if we need help or have technical issues?',
-                answer: 'Our support team is always ready to help. We offer phone support, email assistance, and can even provide on-site help when needed. You\'re never left to figure things out alone.',
-              },
-            ].map((faq, index) => (
-              <div
-                key={index}
-                className="p-6 bg-white/60 backdrop-blur-sm rounded-2xl border border-blue-200/30 hover:bg-white/80 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-100/20 transition-all duration-300"
-              >
-                <h3 className="text-xl font-semibold mb-3 text-slate-800">
-                  {faq.question}
-                </h3>
-                <p className="text-slate-600 leading-relaxed">
-                  {faq.answer}
-                </p>
-              </div>
-            ))}
+          <div className="max-w-3xl mx-auto space-y-4">
+            {FAQ_ITEMS.map((faq, index) => {
+              const isOpen = faqOpenIndex === index;
+              return (
+                <div
+                  key={index}
+                  className="rounded-2xl border border-blue-200/30 bg-white/60 backdrop-blur-sm overflow-hidden hover:bg-white/80 hover:border-blue-300/50 hover:shadow-lg hover:shadow-blue-100/20 transition-all duration-300"
+                >
+                  <button
+                    type="button"
+                    aria-expanded={isOpen}
+                    aria-controls={`faq-answer-${index}`}
+                    id={`faq-question-${index}`}
+                    className="flex w-full items-center justify-between gap-4 p-6 text-left focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset rounded-2xl"
+                    onClick={() => setFaqOpenIndex(isOpen ? null : index)}
+                  >
+                    <h3 className="text-xl font-semibold text-slate-800">
+                      {faq.question}
+                    </h3>
+                    <ChevronDown
+                      className={`h-6 w-6 flex-shrink-0 text-slate-500 transition-transform duration-200 ${isOpen ? 'rotate-180' : ''}`}
+                      aria-hidden
+                    />
+                  </button>
+                  <div
+                    id={`faq-answer-${index}`}
+                    role="region"
+                    aria-labelledby={`faq-question-${index}`}
+                    hidden={!isOpen}
+                    className={`${isOpen ? 'block' : 'hidden'} px-6 pb-6`}
+                  >
+                    <p className="text-slate-600 leading-relaxed">
+                      {faq.answer}
+                    </p>
+                  </div>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>
+
+      </main>
 
       {/* Enhanced Footer */}
       <footer className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white py-16 border-t border-blue-200/30 relative overflow-hidden">
@@ -337,13 +373,13 @@ function App() {
               <p className="text-white/60 text-sm mt-1">by Operium Technologies Pvt Ltd</p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">
-              <a href="#" className="text-white/70 hover:text-stratos-200 transition-colors font-medium">
+              <a href="#" className="text-white/70 hover:text-stratos-200 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded" aria-label="Privacy Policy (page coming soon)">
                 Privacy Policy
               </a>
-              <a href="#" className="text-white/70 hover:text-stratos-200 transition-colors font-medium">
+              <a href="#" className="text-white/70 hover:text-stratos-200 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded" aria-label="Terms of Service (page coming soon)">
                 Terms of Service
               </a>
-              <a href="#" className="text-white/70 hover:text-stratos-200 transition-colors font-medium">
+              <a href="mailto:contact@classbridge.in" className="text-white/70 hover:text-stratos-200 transition-colors font-medium focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-transparent rounded">
                 Contact
               </a>
             </div>

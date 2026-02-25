@@ -2,6 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  /* Design tokens for ClassBridge */
+  --color-primary: 37 99 235;   /* blue-600 */
+  --color-primary-dark: 49 46 129; /* indigo-700 */
+  --section-padding-y: 6rem;   /* py-24 */
+}
+
+/* Skip link: visually hidden until focused */
+.skip-link {
+  @apply absolute left-4 top-4 z-[100] -translate-y-full rounded-lg bg-white px-4 py-2 text-slate-800 shadow-lg transition-transform focus:translate-y-0 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2;
+}
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(20px); }
   to { opacity: 1; transform: translateY(0); }

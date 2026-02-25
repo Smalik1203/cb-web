@@ -1,8 +1,7 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, animate } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { Circle } from "lucide-react";
-import { useEffect, useState } from "react";
 import { cn } from "../../lib/utils";
 
 
@@ -13,6 +12,7 @@ function ElegantShape({
     height = 100,
     rotate = 0,
     gradient = "from-white/[0.08]",
+    reducedMotion = false,
 }: {
     className?: string;
     delay?: number;
@@ -20,36 +20,45 @@ function ElegantShape({
     height?: number;
     rotate?: number;
     gradient?: string;
+    reducedMotion?: boolean;
 }) {
     return (
         <motion.div
             initial={{
-                opacity: 0,
-                y: -150,
-                rotate: rotate - 15,
+                opacity: reducedMotion ? 1 : 0,
+                y: reducedMotion ? 0 : -150,
+                rotate: reducedMotion ? rotate : rotate - 15,
             }}
             animate={{
                 opacity: 1,
                 y: 0,
                 rotate: rotate,
             }}
-            transition={{
-                duration: 2.4,
-                delay,
-                ease: [0.23, 0.86, 0.39, 0.96],
-                opacity: { duration: 1.2 },
-            }}
+            transition={
+                reducedMotion
+                    ? { duration: 0 }
+                    : {
+                          duration: 2.4,
+                          delay,
+                          ease: [0.23, 0.86, 0.39, 0.96],
+                          opacity: { duration: 1.2 },
+                      }
+            }
             className={cn("absolute", className)}
         >
             <motion.div
                 animate={{
-                    y: [0, 15, 0],
+                    y: reducedMotion ? 0 : [0, 15, 0],
                 }}
-                transition={{
-                    duration: 12,
-                    repeat: Number.POSITIVE_INFINITY,
-                    ease: "easeInOut",
-                }}
+                transition={
+                    reducedMotion
+                        ? { duration: 0 }
+                        : {
+                              duration: 12,
+                              repeat: Number.POSITIVE_INFINITY,
+                              ease: "easeInOut",
+                          }
+                }
                 style={{
                     width,
                     height,
@@ -76,19 +85,22 @@ function HeroGeometric({
     badge = "Design Collective",
     title1 = "Elevate Your Digital Vision",
     title2 = "Crafting Exceptional Websites",
+    subtitle,
 }: {
     badge?: string;
     title1?: string;
     title2?: string;
+    subtitle?: string;
 }) {
+    const reducedMotion = useReducedMotion();
     const fadeUpVariants = {
-        hidden: { opacity: 0, y: 30 },
+        hidden: { opacity: 0, y: reducedMotion ? 0 : 30 },
         visible: (i: number) => ({
             opacity: 1,
             y: 0,
             transition: {
-                duration: 1,
-                delay: 0.5 + i * 0.2,
+                duration: reducedMotion ? 0 : 1,
+                delay: reducedMotion ? 0 : 0.5 + i * 0.2,
                 ease: [0.25, 0.4, 0.25, 1],
             },
         }),
@@ -106,6 +118,7 @@ function HeroGeometric({
                     rotate={12}
                     gradient="from-blue-400/[0.15]"
                     className="left-[-10%] md:left-[-5%] top-[15%] md:top-[20%]"
+                    reducedMotion={!!reducedMotion}
                 />
 
                 <ElegantShape
@@ -115,6 +128,7 @@ function HeroGeometric({
                     rotate={-15}
                     gradient="from-indigo-400/[0.15]"
                     className="right-[-5%] md:right-[0%] top-[70%] md:top-[75%]"
+                    reducedMotion={!!reducedMotion}
                 />
 
                 <ElegantShape
@@ -124,6 +138,7 @@ function HeroGeometric({
                     rotate={-8}
                     gradient="from-sky-400/[0.15]"
                     className="left-[5%] md:left-[10%] bottom-[5%] md:bottom-[10%]"
+                    reducedMotion={!!reducedMotion}
                 />
 
                 <ElegantShape
@@ -133,6 +148,7 @@ function HeroGeometric({
                     rotate={20}
                     gradient="from-blue-500/[0.15]"
                     className="right-[15%] md:right-[20%] top-[10%] md:top-[15%]"
+                    reducedMotion={!!reducedMotion}
                 />
 
                 <ElegantShape
@@ -142,6 +158,7 @@ function HeroGeometric({
                     rotate={-25}
                     gradient="from-cyan-400/[0.15]"
                     className="left-[20%] md:left-[25%] top-[5%] md:top-[10%]"
+                    reducedMotion={!!reducedMotion}
                 />
             </div>
 
@@ -187,10 +204,11 @@ function HeroGeometric({
                         initial="hidden"
                         animate="visible"
                     >
-                        <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
-                            Crafting exceptional digital experiences through
-                            innovative design and cutting-edge technology.
-                        </p>
+                        {subtitle && (
+                            <p className="text-base sm:text-lg md:text-xl text-slate-600 mb-8 leading-relaxed font-light tracking-wide max-w-xl mx-auto px-4">
+                                {subtitle}
+                            </p>
+                        )}
                     </motion.div>
                 </div>
             </div>
