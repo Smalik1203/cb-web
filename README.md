@@ -131,4 +131,4 @@ npm run preview
 ## Contact
 
 - **Email**: [contact@classbridge.in](mailto:contact@classbridge.in)
-- **Website**: [classbridge.com](https://classbridge.in)
+- **Website**: [classbridge.in](https://classbridge.in)
