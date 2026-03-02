@@ -83,11 +83,13 @@ function ElegantShape({
 
 function HeroGeometric({
     badge = "Design Collective",
+    badgeLogo,
     title1 = "Elevate Your Digital Vision",
     title2 = "Crafting Exceptional Websites",
     subtitle,
 }: {
     badge?: string;
+    badgeLogo?: string;
     title1?: string;
     title2?: string;
     subtitle?: string;
@@ -171,10 +173,16 @@ function HeroGeometric({
                         animate="visible"
                         className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/80 backdrop-blur-sm border border-blue-200/50 mb-8 md:mb-12 shadow-sm"
                     >
-                        <Circle className="h-2 w-2 fill-blue-500" />
-                        <span className="text-sm text-slate-600 tracking-wide font-medium">
-                            {badge}
-                        </span>
+                        {badgeLogo ? (
+                            <img src={badgeLogo} alt={badge} className="h-6 w-auto" />
+                        ) : (
+                            <>
+                                <Circle className="h-2 w-2 fill-blue-500" />
+                                <span className="text-sm text-slate-600 tracking-wide font-medium">
+                                    {badge}
+                                </span>
+                            </>
+                        )}
                     </motion.div>
 
                     <motion.div
