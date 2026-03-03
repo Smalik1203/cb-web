@@ -35,6 +35,12 @@ const FAQ_ITEMS = [
   },
 ] as const;
 
+const NAV_ITEMS = [
+  { label: 'Features', id: 'features' },
+  { label: 'Why us?', id: 'benefits' },
+  { label: 'Contact', id: 'contact' },
+] as const;
+
 function App() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -57,20 +63,20 @@ function App() {
       <nav aria-label="Main navigation" className={`fixed w-full z-50 transition-all duration-300 border-b border-blue-200/30 shadow-lg shadow-blue-100/20 backdrop-blur-xl ${isScrolled ? 'bg-white/95' : 'bg-white/90'}`}>
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <a href="#" className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded" aria-label="ClassBridge home">
-              <img src={classbridgeWordmark} alt="ClassBridge" className="h-8 w-auto" />
+            <a href="/" className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded" aria-label="ClassBridge home">
+              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">ClassBridge</span>
             </a>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
               <div className="flex space-x-8">
-                {['Features', 'Benefits', 'Contact'].map((item) => (
+                {NAV_ITEMS.map((item) => (
                   <a
-                    key={item}
-                    href={`#${item.toLowerCase()}`}
+                    key={item.id}
+                    href={`#${item.id}`}
                     className="text-slate-600 hover:text-blue-600 transition-colors font-medium relative group focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded"
                   >
-                    {item}
+                    {item.label}
                     <span className="absolute -bottom-1 left-0 w-0 h-0.5 bg-gradient-to-r from-blue-600 to-indigo-600 transition-all duration-300 group-hover:w-full"></span>
                   </a>
                 ))}
@@ -93,14 +99,14 @@ function App() {
           {/* Mobile Menu */}
           {isMenuOpen && (
             <div id="mobile-menu" className="md:hidden absolute top-full left-0 w-full bg-white/95 backdrop-blur-xl border-b border-blue-200/30 py-4 animate-fade-in shadow-lg">
-              {['Features', 'Benefits', 'Contact'].map((item) => (
+              {NAV_ITEMS.map((item) => (
                 <a
-                  key={item}
-                  href={`#${item.toLowerCase()}`}
+                  key={item.id}
+                  href={`#${item.id}`}
                   className="block px-6 py-2 text-slate-600 hover:text-blue-600 hover:bg-blue-50/50 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-inset"
                   onClick={() => setIsMenuOpen(false)}
                 >
-                  {item}
+                  {item.label}
                 </a>
               ))}
             </div>
