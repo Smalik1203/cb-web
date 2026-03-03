@@ -10,7 +10,6 @@ import {
   ChevronDown,
 } from 'lucide-react';
 import { DemoHeroGeometric } from './components/demo';
-import classbridgeWordmark from './assets/classbridge-wordmark.png';
 
 const FAQ_ITEMS = [
   {
@@ -63,9 +62,9 @@ function App() {
       <nav aria-label="Main navigation" className={`fixed w-full z-50 transition-all duration-300 border-b border-blue-200/30 shadow-lg shadow-blue-100/20 backdrop-blur-xl ${isScrolled ? 'bg-white/95' : 'bg-white/90'}`}>
         <div className="container mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
-            <a href="/" className="flex items-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2 rounded" aria-label="ClassBridge home">
-              <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">ClassBridge</span>
-            </a>
+            <span className="text-2xl font-bold bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">
+              ClassBridge
+            </span>
             
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center space-x-8">
@@ -374,9 +373,9 @@ function App() {
       <footer className="bg-gradient-to-br from-blue-600 via-indigo-600 to-purple-600 text-white py-16 border-t border-blue-200/30 relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-blue-500/20 via-transparent to-purple-700/20"></div>
         <div className="container mx-auto px-6">
-          <div className="flex flex-col md:flex-row justify-between items-center mb-12 relative">
+            <div className="flex flex-col md:flex-row justify-between items-center mb-12 relative">
             <div className="mb-8 md:mb-0">
-              <img src={classbridgeWordmark} alt="ClassBridge" className="h-10 w-auto" />
+              <span className="text-2xl font-semibold tracking-tight">ClassBridge</span>
               <p className="text-white/60 text-sm mt-1">by Operium Technologies Pvt Ltd</p>
             </div>
             <div className="flex flex-wrap justify-center gap-8">
